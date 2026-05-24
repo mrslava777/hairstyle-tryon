@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Примерочная причёсок</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header>
+  <h1>Примерочная причёсок</h1>
+  <p class="subtitle">Загрузите фото лица анфас и подберите причёску</p>
+</header>
+
+<main>
+  <section class="stage-wrap">
+    <div id="stage" class="stage">
+      <img id="photo" alt="" />
+      <div id="hairLayer" class="hair-layer" hidden>
+        <div id="hairHandle" class="hair-handle"></div>
+      </div>
+      <div id="placeholder" class="placeholder">
+        <span>📷</span>
+        <p>Загрузите фото, чтобы начать</p>
+      </div>
+    </div>
+
+    <div class="stage-tools">
+      <label class="btn">
+        <input type="file" id="fileInput" accept="image/*" hidden />
+        Загрузить фото
+      </label>
+      <button id="resetBtn" class="btn btn-ghost" type="button">Сбросить причёску</button>
+      <button id="downloadBtn" class="btn btn-primary" type="button">Скачать результат</button>
+    </div>
+  </section>
+
+  <aside class="sidebar">
+    <h2>Причёски</h2>
+    <div id="styles" class="styles-grid"></div>
+
+    <h2>Настройки</h2>
+    <div class="controls">
+      <label>
+        Размер
+        <input type="range" id="scale" min="20" max="220" value="100" />
+      </label>
+      <label>
+        Поворот
+        <input type="range" id="rotate" min="-45" max="45" value="0" />
+      </label>
+      <label>
+        Сдвиг по горизонтали
+        <input type="range" id="offsetX" min="-200" max="200" value="0" />
+      </label>
+      <label>
+        Сдвиг по вертикали
+        <input type="range" id="offsetY" min="-200" max="200" value="0" />
+      </label>
+      <label>
+        Цвет волос
+        <input type="color" id="color" value="#3a2418" />
+      </label>
+      <label>
+        Прозрачность
+        <input type="range" id="opacity" min="30" max="100" value="100" />
+      </label>
+    </div>
+
+    <p class="hint">Подсказка: причёску также можно перетаскивать пальцем прямо на фото.</p>
+  </aside>
+</main>
+
+<footer>
+  <small>Всё работает локально в браузере — фото никуда не отправляется.</small>
+</footer>
+
+<script src="hairstyles.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
