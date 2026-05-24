@@ -19,9 +19,7 @@ html, body {
   min-height: 100vh;
 }
 
-header {
-  padding: 24px 32px 8px;
-}
+header { padding: 24px 32px 8px; }
 header h1 { margin: 0; font-size: 26px; letter-spacing: 0.2px; }
 .subtitle { margin: 4px 0 0; color: var(--muted); }
 
@@ -32,16 +30,9 @@ main {
   padding: 16px 32px 32px;
   align-items: start;
 }
+@media (max-width: 900px) { main { grid-template-columns: 1fr; } }
 
-@media (max-width: 900px) {
-  main { grid-template-columns: 1fr; }
-}
-
-.stage-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+.stage-wrap { display: flex; flex-direction: column; gap: 12px; }
 
 .stage {
   position: relative;
@@ -56,6 +47,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  isolation: isolate;
 }
 
 #photo {
@@ -79,33 +71,75 @@ main {
   touch-action: none;
 }
 .hair-layer:active { cursor: grabbing; }
-.hair-layer svg { width: 100%; height: 100%; display: block; pointer-events: none; }
+
+.hair-render {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.hair-render svg { width: 100%; height: 100%; display: block; }
+
+.hair-base svg { filter: url(#hair-grain); }
+
+.hair-shadow {
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 28%, transparent 65%);
+          mask-image: linear-gradient(to bottom, black 0%, black 28%, transparent 65%);
+}
+.hair-shadow svg {
+  filter: url(#hair-grain-soft) brightness(0.35) saturate(1.4) contrast(1.1);
+}
+
+.hair-light {
+  mix-blend-mode: soft-light;
+  opacity: 0.45;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 20%, black 0%, transparent 55%);
+          mask-image: radial-gradient(ellipse at 50% 20%, black 0%, transparent 55%);
+}
+.hair-light svg {
+  filter: brightness(3) saturate(0.4);
+}
 
 .hair-handle {
   position: absolute;
   right: -10px;
   bottom: -10px;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   background: var(--accent);
   border: 2px solid white;
   border-radius: 50%;
   cursor: nwse-resize;
   box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  pointer-events: auto;
+  z-index: 10;
 }
 
 .placeholder {
   color: var(--muted);
   text-align: center;
+  pointer-events: none;
 }
 .placeholder span { font-size: 56px; display: block; }
 .placeholder p { margin-top: 8px; }
 
-.stage-tools {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+.status {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
+.status.show { opacity: 1; }
+
+.stage-tools { display: flex; gap: 8px; flex-wrap: wrap; }
 
 .btn {
   display: inline-block;
@@ -143,11 +177,7 @@ main {
 }
 .sidebar h2:first-child { margin-top: 0; }
 
-.styles-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
+.styles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 
 .style-card {
   background: #fbf9f5;
@@ -163,21 +193,10 @@ main {
 }
 .style-card:hover { background: #f4eee3; }
 .style-card.active { border-color: var(--accent); background: #f7ead8; }
-.style-card svg {
-  width: 100%;
-  height: 64px;
-}
-.style-card span {
-  font-size: 11px;
-  color: var(--muted);
-  text-align: center;
-}
+.style-card svg { width: 100%; height: 64px; }
+.style-card span { font-size: 11px; color: var(--muted); text-align: center; }
 
-.controls {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+.controls { display: flex; flex-direction: column; gap: 10px; }
 .controls label {
   display: flex;
   flex-direction: column;
@@ -187,8 +206,7 @@ main {
 }
 .controls input[type="range"] { width: 100%; }
 .controls input[type="color"] {
-  width: 100%;
-  height: 36px;
+  width: 100%; height: 36px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: none;
@@ -196,15 +214,5 @@ main {
   cursor: pointer;
 }
 
-.hint {
-  margin-top: 14px;
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.4;
-}
-
-footer {
-  text-align: center;
-  padding: 12px 16px 24px;
-  color: var(--muted);
-}
+.hint { margin-top: 14px; font-size: 12px; color: var(--muted); line-height: 1.4; }
+footer { text-align: center; padding: 12px 16px 24px; color: var(--muted); }
